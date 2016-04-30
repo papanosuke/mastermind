@@ -1,0 +1,34 @@
+#!/bin/sh
+# /etc/init.d/motioncontrol
+ 
+### BEGIN INIT INFO
+# Provides: motioncontrol
+# Required-Start: $remote_fs $syslog
+# Required-Stop: $remote_fs $syslog
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: Simple script to start motion-mmal program at boot
+# Description: A simple script to start the motion-mmal at boot.
+### END INIT INFO
+ 
+# If you want a command to always run, put it here
+ 
+# Carry out specific functions when asked to by the system
+case “$1″ in
+start)
+echo “Starting motion-mmal”
+# run application you want to start
+nohup /home/pi/mmal/motion-mmal -n -c /home/pi/mmal/motion-mmalcam.conf 1>dev/null 2>&1 </dev/null &
+;;
+stop)
+echo "Stopping motion-mmal"
+# kill application you want to stop
+killall motion-mmal
+;;
+*)
+echo "Usage: /etc/init.d/motioncontrol {start|stop}"
+exit 1
+;;
+esac
+ 
+exit 0
